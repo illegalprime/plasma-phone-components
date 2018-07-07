@@ -18,15 +18,12 @@ PlasmaComponents.TextField {
 
     signal append(string digit)
     onAppend: {
-        digits += digit
-        reformat();
+        text += digit
     }
-    property var digits: ""
-    property var reformat: function() {
-        root.text = dialerUtils.formatNumber(digits);
+    onTextChanged: {
+        text = dialerUtils.formatNumber(text);
     }
 
-    // TODO: handle formatting when typing / pasting on dialer
     // TODO: search through contacts while typing
 
     Row {
@@ -55,9 +52,8 @@ PlasmaComponents.TextField {
             MouseArea {
                 anchors.fill: parent
                 onClicked: {
-                    if (digits.length > 0) {
-                        digits = digits.slice(0, -1);
-                        reformat()
+                    if (text.length > 0) {
+                        text = text.slice(0, -1);
                     }
                 }
             }
