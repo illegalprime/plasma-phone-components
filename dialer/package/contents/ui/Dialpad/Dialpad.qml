@@ -62,7 +62,7 @@ GridLayout {
         opacity: enabled ? 1 : 0.5
         source: "call-start"
         callback: function() {
-            call(status.text);
+            call(status.digits);
         }
     }
     Item {

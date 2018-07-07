@@ -20,7 +20,6 @@
 
 #include <QDebug>
 
-#include <KLocalizedString>
 #include <TelepathyQt/PendingOperation>
 #include <TelepathyQt/PendingChannelRequest>
 #include <TelepathyQt/PendingReady>
@@ -28,6 +27,8 @@
 #include <TelepathyQt/PendingContacts>
 #include <TelepathyQt/Types>
 #include <TelepathyQt/ContactManager>
+
+#include "phonenumbers/phonenumberutil.h"
 
 DialerUtils::DialerUtils(const Tp::AccountPtr &simAccount, QObject *parent)
 : QObject(parent),
@@ -75,6 +76,27 @@ void DialerUtils::dial(const QString &number)
 QString DialerUtils::callState() const
 {
     return m_callState;
+}
+
+const QString DialerUtils::formatNumber(const QString& number)
+{
+  using namespace ::i18n::phonenumbers;
+  PhoneNumberUtil* util = PhoneNumberUtil::GetInstance();
+
+  // parse
+  PhoneNumber pnum;
+  string region("US");
+  PhoneNumberUtil::ErrorType err =
+    util->Parse(number.toStdString(), region, &pnum);
+  if (err != PhoneNumberUtil::NO_PARSING_ERROR) {
+    return number;
+  }
+
+  // format
+  string formatted;
+  util->Format(pnum, PhoneNumberUtil::NATIONAL, &formatted);
+
+  return QString::fromStdString(formatted);
 }
 
 void DialerUtils::setCallState(const QString &state)

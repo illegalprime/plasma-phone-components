@@ -13,6 +13,7 @@ target_compile_definitions(plasmaphonedialer PRIVATE -DPROJECT_VERSION="${PROJEC
 #find_package(ActiveApp REQUIRED)
 
 target_link_libraries(plasmaphonedialer
+ phonenumber
  Qt5::Gui
  Qt5::Quick
  Qt5::Widgets

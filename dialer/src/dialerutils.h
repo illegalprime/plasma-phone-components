@@ -58,6 +58,7 @@ public:
 
     Q_INVOKABLE void resetMissedCalls();
     Q_INVOKABLE void dial(const QString &number);
+    Q_INVOKABLE const QString formatNumber(const QString& number);
 
 Q_SIGNALS:
     void missedCallsActionTriggered();

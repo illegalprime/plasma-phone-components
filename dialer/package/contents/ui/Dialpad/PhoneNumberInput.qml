@@ -18,17 +18,15 @@ PlasmaComponents.TextField {
 
     signal append(string digit)
     onAppend: {
-        digits.push(digit)
+        digits += digit
         reformat();
     }
-    property var digits: []
+    property var digits: ""
     property var reformat: function() {
-        root.text = digits.join('-')
+        root.text = dialerUtils.formatNumber(digits);
     }
 
-    // TODO: format phone numbers correctly
     // TODO: handle formatting when typing / pasting on dialer
-    // TODO: strip extra format character when making a call
     // TODO: search through contacts while typing
 
     Row {
@@ -58,7 +56,7 @@ PlasmaComponents.TextField {
                 anchors.fill: parent
                 onClicked: {
                     if (digits.length > 0) {
-                        digits.pop()
+                        digits = digits.slice(0, -1);
                         reformat()
                     }
                 }
