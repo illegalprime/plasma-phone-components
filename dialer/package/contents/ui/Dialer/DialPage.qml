@@ -17,18 +17,40 @@
  *   51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
 
-import QtQuick 2.0
-import QtQuick.Layouts 1.1
-import org.kde.plasma.core 2.0 as PlasmaCore
-import org.kde.plasma.components 2.0 as PlasmaComponents
+import QtQuick 2.4
+import QtQuick.Controls 2.0 as Controls
+import org.kde.kirigami 2.2 as Kirigami
 
-Column {
-    spacing: 0
-    anchors.fill: parent
+Kirigami.Page {
 
-    PlasmaComponents.TabGroup {
-        height: parent.height - tabbar.height
-        width: parent.width
+    footer: Controls.TabBar {
+        id: tabbar
+        currentIndex: swipeView.currentIndex
+
+        Controls.TabButton {
+            text: i18n("History")
+            icon.name: "view-history"
+        }
+        Controls.TabButton {
+            text: i18n("Contacts")
+            icon.name: "view-pim-contacts"
+        }
+        Controls.TabButton {
+            text: i18n("Dialpad")
+            icon.name: "input-keyboard"
+        }
+    }
+
+    topPadding: 0
+    leftPadding: 0
+    rightPadding: 0
+    bottomPadding: 0
+
+    Controls.SwipeView {
+        id: swipeView
+        anchors.fill: parent
+        clip: true
+        currentIndex: tabbar.currentIndex
 
         History {
             id: history
@@ -38,28 +60,6 @@ Column {
         }
         Dialer {
             id: dialer
-        }
-    }
-    PlasmaComponents.TabBar {
-        id: tabbar
-        height: units.gridUnit * 5
-        width: parent.width
-
-        tabPosition: Qt.BottomEdge
-        PlasmaComponents.TabButton {
-            iconSource: "view-history"
-            text: i18n("History")
-            tab: history
-        }
-        PlasmaComponents.TabButton {
-            iconSource: "view-pim-contacts"
-            text: i18n("Contacts")
-            tab: contacts
-        }
-        PlasmaComponents.TabButton {
-            iconSource: "input-keyboard"
-            text: i18n("Dialpad")
-            tab: dialer
         }
     }
 }

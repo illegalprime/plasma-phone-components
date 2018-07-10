@@ -24,8 +24,9 @@ import QtQuick.Layouts 1.1
 import QtQuick.LocalStorage 2.0
 import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.extras 2.0 as PlasmaExtras
+import org.kde.kirigami 2.2 as Kirigami
 
-ApplicationWindow {
+Kirigami.ApplicationWindow {
     id: root
 
 //BEGIN PROPERTIES
