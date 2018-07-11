@@ -87,7 +87,7 @@ Item {
 
             opacity: special? 0.4 : 1.0
             // anything higher for some reason makes number 4 not rendered
-            font.pixelSize: 40
+            font.pointSize: 30
             fontSizeMode: Text.VerticalFit
             Layout.minimumWidth: parent.width
             horizontalAlignment: Text.AlignHCenter
@@ -97,7 +97,7 @@ Item {
             id: longHold
 
             opacity: 0.4
-            font.pixelSize: 20
+            font.pointSize: 16
             fontSizeMode: Text.VerticalFit
             Layout.minimumWidth: parent.width
             horizontalAlignment: Text.AlignHCenter

@@ -59,9 +59,9 @@ Item {
             id: status
 
             Layout.fillWidth: true
-            Layout.minimumHeight: 65
+            Layout.minimumHeight: units.gridUnit * 3.5
             Layout.maximumHeight: Layout.minimumHeight
-            font.pixelSize: 40
+            font.pointSize: 30
         }
 
         Dialpad {
