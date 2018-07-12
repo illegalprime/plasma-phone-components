@@ -78,9 +78,9 @@ private:
     int m_missedCalls;
     QString m_callState;
     Tp::AccountPtr m_simAccount;
-    QString m_callContactAlias;
     QString m_callContactNumber;
     uint m_callDuration;
+    QString m_callContactAlias;
     bool m_isIncomingCall;
 };
 
