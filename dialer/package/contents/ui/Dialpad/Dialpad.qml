@@ -45,9 +45,9 @@ GridLayout {
     DialerButton { text: "8"; sub: "TUV" }
     DialerButton { text: "9"; sub: "WXYZ" }
 
-    DialerButton { text: "*"; special: true; }
-    DialerButton { text: "0"; sub: "+"; }
-    DialerButton { text: "#"; special: true; }
+    DialerButton { display: "＊"; text: "*"; special: true; }
+    DialerButton { text: "0"; subdisplay: "＋"; sub: "+"; }
+    DialerButton { display: "＃"; text: "#"; special: true; }
 
     Item {
         Layout.fillWidth: true

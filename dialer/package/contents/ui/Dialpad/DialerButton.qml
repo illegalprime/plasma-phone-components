@@ -9,6 +9,7 @@
  *
  *   This program is distributed in the hope that it will be useful,
  *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+
  *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  *   GNU Library General Public License for more details
  *
@@ -24,11 +25,14 @@ import org.kde.plasma.core 2.0 as PlasmaCore
 import org.kde.plasma.components 2.0 as PlasmaComponents
 
 Item {
+    id: root
     Layout.fillWidth: true
     Layout.fillHeight: true
 
-    property alias text: main.text
-    property alias sub: longHold.text
+    property string text
+    property string sub
+    property string display
+    property string subdisplay
     property bool special: false
 
     Rectangle {
@@ -85,6 +89,7 @@ Item {
         PlasmaComponents.Label {
             id: main
 
+            text: root.display || root.text
             opacity: special? 0.4 : 1.0
             // anything higher for some reason makes number 4 not rendered
             font.pointSize: 30
@@ -96,6 +101,7 @@ Item {
         PlasmaComponents.Label {
             id: longHold
 
+            text: root.subdisplay || root.sub
             opacity: 0.4
             font.pointSize: 16
             fontSizeMode: Text.VerticalFit
