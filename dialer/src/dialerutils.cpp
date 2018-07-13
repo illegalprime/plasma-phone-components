@@ -29,6 +29,7 @@
 #include <TelepathyQt/ContactManager>
 
 #include "phonenumbers/phonenumberutil.h"
+#include "phonenumbers/asyoutypeformatter.h"
 
 DialerUtils::DialerUtils(const Tp::AccountPtr &simAccount, QObject *parent)
 : QObject(parent),
@@ -80,23 +81,29 @@ QString DialerUtils::callState() const
 
 const QString DialerUtils::formatNumber(const QString& number)
 {
-  using namespace ::i18n::phonenumbers;
-  PhoneNumberUtil* util = PhoneNumberUtil::GetInstance();
+    using namespace ::i18n::phonenumbers;
 
-  // parse
-  PhoneNumber pnum;
-  string region("US");
-  PhoneNumberUtil::ErrorType err =
-    util->Parse(number.toStdString(), region, &pnum);
-  if (err != PhoneNumberUtil::NO_PARSING_ERROR) {
-    return number;
-  }
+    // Get formatter instance
+    QLocale locale;
+    QStringList qcountry = locale.name().split('_');
+    QString countrycode(qcountry.constLast());
+    const char* country = countrycode.toUtf8().constData();
+    PhoneNumberUtil* util = PhoneNumberUtil::GetInstance();
+    AsYouTypeFormatter* formatter = util->PhoneNumberUtil::GetAsYouTypeFormatter(country);
 
-  // format
-  string formatted;
-  util->Format(pnum, PhoneNumberUtil::NATIONAL, &formatted);
+    // Normalize input
+    string stdnumber = number.toUtf8().constData();
+    util->NormalizeDiallableCharsOnly(&stdnumber);
 
-  return QString::fromStdString(formatted);
+    // Format
+    string formatted;
+    formatter->Clear();
+    for (char& c : stdnumber) {
+        formatter->InputDigit(c, &formatted);
+    }
+    delete formatter;
+
+    return QString::fromStdString(formatted);
 }
 
 void DialerUtils::setCallState(const QString &state)
